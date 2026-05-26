@@ -16,7 +16,7 @@
 
     uint256 private constant PRECISIONFACTOR = 1e18;
     bytes32 private constant MINT_AND_BURN_ROLE = keccak256("MINT_AND_BURN_ROLE");
-    uint256 private s_interestRate = 5e18;
+    uint256 private s_interestRate = (5 * PRECISIONFACTOR)/ 1e8; // 5% annual interest rate expressed with 18 decimals of precision;
     mapping (address => uint256) private  s_userInterestRate;
     mapping (address => uint256) private s_userLastUpdatedTimestamp;
 
@@ -43,9 +43,6 @@
             _mint(_to, _amount);
         }
         function burn(address _from, uint256 _amount) external onlyRole(MINT_AND_BURN_ROLE){ {
-            if(_amount == type(uint256).max){
-                _amount = balanceOf(_from);
-            }
             _mintAccruedInterest(_from);
             _burn(_from, _amount);
         }

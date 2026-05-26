@@ -1,6 +1,5 @@
 // SPDX-License-Identifier:MIT
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity  solidity ^0.8.18;
+pragma solidity ^0.8.18;
 
 import {IRebaseToken} from "./interfaces/IRebaseToken.sol";
 
@@ -31,6 +30,9 @@ contract Vault{
      * @param _amount The amount of Ether to redeem.
      */
     function redeem(uint256 _amount) external{
+        if(_amount  == type(uint256).max {
+            _amount = i_rebaseToken.balanceOf(msg.sender);
+        })
         i_rebaseToken.burn(msg.sender, _amount);
         (bool success) = payable(msg.sender).call{value: _amount}("");
         if(!success){
